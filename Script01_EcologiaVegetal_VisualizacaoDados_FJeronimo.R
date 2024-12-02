@@ -1,3 +1,9 @@
+# Universidade Federal do Paraná
+# BB087 - REcologia Vegetal (2024) - Profa. Isabela Galarda Varassin
+# Aula: Análise Descritiva de Dados
+# Prof. Fernando Fortunato Jeronimo (PPG Botânica UFPR)
+# Código criado por Fernando F. Jeronimo e revisado com Microsoft Copilot
+
 # Determinar diretório de trabalho
 setwd('caminho/para/a/pasta')
 getwd()
@@ -9,11 +15,10 @@ install.packages('esquisse')
 install.packages('scales')
 
 # Carregando pacotes necessários
-require(tidyverse)
-require(rstatix)
-require(esquisse)
-require(scales)
-
+library(tidyverse)
+library(rstatix)
+library(esquisse)
+library(scales)
 
 # Carregando os dados
 # Dados Iris
@@ -66,7 +71,7 @@ FIG.DIS <- ggplot(data = iris_data,
         strip.text = element_text(size = 12, 
                                   face='italic', 
                                   color = '#000000'))+
-  scale_color_brewer(palette = 'Greens')+
+  scale_color_brewer(palette = 'Set1')+
   labs(x = 'Sepal Length', 
        y = 'Pepal Length')
 
@@ -94,15 +99,48 @@ FIG.BOX <- ggplot(data = iris_data,
         strip.text = element_text(size = 12, 
                                   face ='italic', 
                                   color = '#000000'))+
-  scale_fill_brewer(palette = 'Greens')+
+  scale_fill_brewer(palette = 'Set1')+
   labs(x = 'Species', y = 'Pepal Length')+
-  stat_summary(fun=mean, color='#F2EDD7', 
+  stat_summary(fun = mean, color = 'grey', 
                position = position_dodge(0.9),
                geom = 'point', 
                shape = 18, size=3,
                show.legend = FALSE)
 
 FIG.BOX
+
+# Violin 
+FIG.VIO <- ggplot(data = iris_data, 
+                  mapping = aes(x = Species, 
+                                y = Petal.Length,
+                                fill = Species))+
+  geom_violin()+
+  geom_jitter(width = 0.1,
+              alpha = 0.5,
+              color = 'grey')+
+  theme_classic()+
+  theme(plot.title = element_blank(),
+        axis.title = element_text (size = 12, 
+                                   face = 'bold', 
+                                   color = '#000000'),
+        axis.text = element_text (size = 10, 
+                                  color = '#000000'),
+        legend.title = element_text (size = 12,
+                                     face = 'bold'),
+        legend.text = element_text (size = 10),
+        legend.position = '',
+        strip.text = element_text(size = 12, 
+                                  face ='italic', 
+                                  color = '#000000'))+
+  scale_fill_brewer(palette = 'Set1')+
+  labs(x = 'Species', y = 'Pepal Length')+
+  stat_summary(fun = mean, color = 'black', 
+               position = position_dodge(0.9),
+               geom = 'point', 
+               shape = 18, size=3,
+               show.legend = FALSE)
+
+FIG.VIO
 
 
 
@@ -126,7 +164,7 @@ FIG.DEN <- ggplot(data = iris_data,
         strip.text = element_text(size = 12, 
                                   face ='italic', 
                                   color = '#000000'))+
-  scale_fill_brewer(palette = 'Greens')+
+  scale_fill_brewer(palette = 'Set1')+
   labs(x = 'Species', y = 'Pepal Length')
 
 
@@ -135,8 +173,7 @@ FIG.DEN
 # Barras
 FIG.BAR <- ggplot(data = iris_data, 
                   mapping = aes(x = Species,
-                                fill = Species,
-                                alpha = 0.75))+
+                                fill = Species))+
   geom_bar(stat = 'count',
            position = 'stack')+
   theme_classic()+
@@ -153,7 +190,7 @@ FIG.BAR <- ggplot(data = iris_data,
         strip.text = element_text(size = 12, 
                                   face ='italic', 
                                   color = '#000000'))+
-  scale_fill_brewer(palette = 'Greens')+
+  scale_fill_brewer(palette = 'Set1')+
   labs(x = 'Species', y = 'Pepal Length')
 
 FIG.BAR
@@ -184,7 +221,7 @@ FIG.BAR2 <- ggplot(data = stats_iris %>%
         strip.text = element_text(size = 12, 
                                   face ='italic', 
                                   color = '#000000'))+
-  scale_fill_brewer(palette = 'Greens')+
+  scale_fill_brewer(palette = 'Set1')+
   labs(x = 'Species', y = 'Petal Length')
 
 FIG.BAR2
@@ -208,7 +245,7 @@ FIG.HIS <- ggplot(data = iris_data,
         strip.text = element_text(size = 12, 
                                   face ='italic', 
                                   color = '#000000'))+
-  scale_fill_brewer(palette = 'Greens')+
+  scale_fill_brewer(palette = 'Set1')+
   labs(x = 'Species', y = 'Petal Length')
 
 FIG.HIS
@@ -240,7 +277,7 @@ FIG.PIZ <- ggplot(data = iris_pizza,
         strip.text = element_text(size = 12, 
                                   face ='italic', 
                                   color = '#000000'))+
-  scale_fill_brewer(palette = 'Greens')+
+  scale_fill_brewer(palette = 'Set1')+
   geom_text(aes(y = n/3 + c(0, cumsum(n)[-length(n)]), 
                 label = percent((n/(n*3)))), size = 5)
 
@@ -249,10 +286,10 @@ FIG.PIZ
 # Para salvar a figura
 ggsave('nome_da_figura.png',
        FIG.ESCOLHIDA,
-       width = 9,
-       height = 9,
-       units = 'cm',
-       dpi = 300)
+       # width = 9,
+       # height = 9,
+       # units = 'cm',
+       dpi = 600)
 
 
 # Se você é uma pessoa cansada:
